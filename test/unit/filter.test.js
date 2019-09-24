@@ -1328,12 +1328,25 @@ describe('Filter', () => {
       .eq()
       .literal(true);
 
+    const clauseD = Clause
+      .target('/bar')
+      .neq()
+      .literal(' a? ');
+
     it('should stringify clause', () => {
       const result = Filter
         .where(clauseA)
         .toString();
 
       assert.strictEqual(result, '/foo gt 42');
+    });
+
+    it('should trim spaces and stringify clause', () => {
+      const result = Filter
+        .where(clauseD)
+        .toString();
+
+      assert.strictEqual(result, '/bar neq "a?"');
     });
 
     it('should stringify anded clauses', () => {
