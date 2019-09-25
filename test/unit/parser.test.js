@@ -173,6 +173,13 @@ describe('Parser', () => {
       assert.strictEqual(filter.statements[0].value.object, 42);
     });
 
+    it('should not parse Uuid that is not in quotes', () => {
+      const parser = new Parser('/foo/bar eq 184348ca-60db-4d86-9e99-40cc8245c0db');
+      const result = parser.parse();
+      assert.isFalse(result.success);
+      assert.instanceOf(result.error, errors.ParserError);
+    });
+
     it('should parse Boolean object for eq', () => {
       const parser = new Parser('/foo eq false');
       const filter = parser.parse().value;
