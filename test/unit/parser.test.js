@@ -82,6 +82,17 @@ describe('Parser', () => {
       assert.strictEqual(filter.statements[1].value.object, 10);
     });
 
+    it('should trim off extra space', () => {
+      const parser = new Parser('/data/organizationId eq "f0893408-e275-4d22-8fc4-7ef4930f9cd1" ');
+      const filter = parser.parse().value;
+      assert.strictEqual(filter.statements[0].value.object, 'f0893408-e275-4d22-8fc4-7ef4930f9cd1');
+    });
+
+    it('should fix when first quote is missing', () => {
+      const parser = new Parser('/data/organizationId eq f0893408-e275-4d22-8fc4-7ef4930f9cd1"');
+      assert.strictEqual(parser.error.toString(), 'ReferenceError: err is not defined');
+    });
+
     it('should parse gt operator', () => {
       const parser = new Parser('/foo gt 42');
       const filter = parser.parse().value;
