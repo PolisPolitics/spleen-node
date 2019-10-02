@@ -90,7 +90,7 @@ describe('Parser', () => {
 
     it('should fix when first quote is missing', () => {
       const parser = new Parser('/data/organizationId eq f0893408-e275-4d22-8fc4-7ef4930f9cd1"');
-      assert.strictEqual(parser.error.toString(), 'ReferenceError: err is not defined');
+      assert.strictEqual(parser.error, errors.ParserError);
     });
 
     it('should parse gt operator', () => {
