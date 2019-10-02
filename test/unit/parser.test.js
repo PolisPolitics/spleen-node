@@ -76,6 +76,12 @@ describe('Parser', () => {
     });
 
     it('should trim off extra space at the end of filter', () => {
+      const parser = new Parser('/data/organizationId eq "f0893408-e275-4d22-8fc4-7ef4930f9cd1" ');
+      const filter = parser.parse().value;
+      assert.strictEqual(filter.statements[0].value.object, 'f0893408-e275-4d22-8fc4-7ef4930f9cd1');
+    });
+
+    it('should trim off extra space at the end of filter that has and', () => {
       const parser = new Parser('/data/organizationId eq "f0893408-e275-4d22-8fc4-7ef4930f9cd1" and /bar eq 10 ');
       const filter = parser.parse().value;
       assert.strictEqual(filter.statements[0].value.object, 'f0893408-e275-4d22-8fc4-7ef4930f9cd1');
@@ -88,7 +94,7 @@ describe('Parser', () => {
       assert.strictEqual(filter.statements[0].value.object, 'f0893408-e275-4d22-8fc4-7ef4930f9cd1');
     });
 
-    it('should fix when first quote is missing', () => {
+    it('should throw error when first quote is missing', () => {
       assert.throws(() => new Parser('/data/organizationId eq f0893408-e275-4d22-8fc4-7ef4930f9cd1"'));
     });
 
