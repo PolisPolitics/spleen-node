@@ -7,6 +7,9 @@ dist: trusty
 
 sudo: required
 
+before_install:
+  - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
+
 before_script:
   - npm install -g mocha
   - npm install -g istanbul
@@ -15,6 +18,15 @@ before_script:
 script:
   - npm test
   - npm run lint
+
+deploy:
+  - provider: npm
+    email: bot@polisapp.com
+    skip_cleanup: true
+    api_key: $NPM_TOKEN
+    on:
+      tags: true
+      branch: master
 
 after_script:
   - "npm install coveralls@^2.11.1 && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
