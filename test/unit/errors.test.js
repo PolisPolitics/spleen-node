@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('chai').assert;
-
+const Parser = require('../../lib/parser');
 const errors = require('../../lib/errors');
 
 
@@ -94,7 +94,7 @@ describe('ParserError', () => {
       assert.strictEqual(e.data, 42);
     });
 
-    it('should set message to defualt if undefined and 2 args', () => {
+    it('should set message to default if undefined and 2 args', () => {
       const e = new errors.ParserError(undefined, 42);
       assert.strictEqual(e.message, errors.ParserError.defaultMessage);
     });
@@ -107,6 +107,16 @@ describe('ParserError', () => {
     it('should set name', () => {
       const e = new errors.ParserError();
       assert.strictEqual(e.name, 'ParserError');
+    });
+
+    it('should throw error if there is extra space at the end of filter', () => {
+      const e = new Parser('/data/organizationId eq "f0893408-e275-4d22-8fc4-7ef4930f9cd1" ').parse();
+      assert.strictEqual(e.error.name, 'ParserError');
+    });
+
+    it('should throw error when first quote is missing', () => {
+      const e = new Parser('/data/organizationId eq f0893408-e275-4d22-8fc4-7ef4930f9cd1"').parse();
+      assert.strictEqual(e.error.name, 'ParserError');
     });
   });
 
