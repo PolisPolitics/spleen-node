@@ -2,7 +2,7 @@
 
 const assert = require('chai').assert;
 
-const errors = require('../../lib/errors');
+const errors = require('@polis-politics/errors');
 const Target = require('../../lib/target');
 const Tokenizer = require('../../lib/tokenizer');
 
