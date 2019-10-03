@@ -3,7 +3,7 @@
 const assert = require('chai').assert;
 
 const Clause = require('../../lib/clause');
-const errors = require('../../lib/errors');
+const errors = require('@polis-politics/errors');
 const Filter = require('../../lib/filter');
 const Operator = require('../../lib/operator');
 const Parser = require('../../lib/parser');

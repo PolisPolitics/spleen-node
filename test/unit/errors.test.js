@@ -2,7 +2,7 @@
 
 const assert = require('chai').assert;
 const Parser = require('../../lib/parser');
-const errors = require('@polis-politics/errors');
+const errors = require('../../lib/errors');
 
 
 describe('MatchError', () => {
